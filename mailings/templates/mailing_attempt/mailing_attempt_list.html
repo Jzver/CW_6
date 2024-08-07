@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Mailing Attempts{% endblock %}
+
+{% block content %}
+    <h1>Mailing Attempts</h1>
+    <a href="{% url 'mailings:mailing_attempt_create' %}">Create new mailing attempt</a>
+    <ul>
+        {% for mailing_attempt in mailing_attempts %}
+            <li>
+                <a href="{% url 'mailings:mailing_attempt_detail' mailing_attempt.pk %}">{{ mailing_attempt.mailing.subject }} - {{ mailing_attempt.status }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

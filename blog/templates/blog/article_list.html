@@ -1,0 +1,42 @@
+﻿<!-- article_list.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог</title>
+    <link rel="stylesheet" href="{% static 'admin/css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Блог</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Главная</a></li>
+            <li><a href="{% url 'article_list' %}">Блог</a></li>
+            <!-- Добавьте другие ссылки на навигацию здесь -->
+        </ul>
+    </nav>
+    <main>
+        <h2>Список статей</h2>
+        {% if articles %}
+            <ul>
+                {% for article in articles %}
+                    <li>
+                        <h3>{{ article.title }}</h3>
+                        <p>{{ article.content|truncatewords:30 }}</p>
+                        <p><small>Опубликовано: {{ article.pub_date }}</small></p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Статей нет.</p>
+        {% endif %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Ваша компания</p>
+    </footer>
+</body>
+</html>
