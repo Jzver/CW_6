@@ -1,0 +1,43 @@
+<!-- templates/mailings/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+    <p>Добро пожаловать на главную страницу!</p>
+
+    <!-- Условие для отображения кнопок в зависимости от состояния пользователя -->
+    {% if user.is_authenticated %}
+        <div>
+            <form method="post" action="{% url 'users:logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn">Выход</button>
+            </form>
+        </div>
+    {% else %}
+        <div>
+            <a href="{% url 'users:login' %}" class="btn">Вход</a>
+            <a href="{% url 'users:register' %}" class="btn">Регистрация</a>
+        </div>
+
+        <!-- Форма регистрации только для неавторизованных пользователей -->
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+        </form>
+    {% endif %}
+<h2>Рекомендуемые статьи</h2>
+{% if random_articles %}
+    <ul>
+        {% for article in random_articles %}
+            <li>
+                <h3>{{ article.title }}</h3>
+                <p>{{ article.content|truncatewords:20 }}</p>
+                <p><small>Опубликовано: {{ article.pub_date }}</small></p>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Статей нет.</p>
+{% endif %}
+{% endblock %}

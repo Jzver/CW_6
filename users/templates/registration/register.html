@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="col-12">
+        <form class="row" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                       {{form.as_p}}
+                        <button type="submit" class="btn btn-primary">
+                            Регистрация
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}Edit Message{% else %}Create Message{% endif %}
+{% endblock %}
+
+{% block content %}
+    <h1>{% if form.instance.pk %}Edit Message{% else %}Create Message{% endif %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'mailings:message_list' %}">Back to list</a>
+{% endblock %}

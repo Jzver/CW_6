@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Mailing Detail{% endblock %}
+
+{% block content %}
+    <h1>{{ mailing.subject }}</h1>
+    <p>Body: {{ mailing.body }}</p>
+    <a href="{% url 'mailings:mailing_update' mailing.pk %}">Edit</a>
+    <a href="{% url 'mailings:mailing_delete' mailing.pk %}">Delete</a>
+    <a href="{% url 'mailings:mailing_list' %}">Back to list</a>
+{% endblock %}

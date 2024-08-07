@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Главная страница{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'admin/css/style.css' %}">
+    <style>
+        .inactive-link {
+            pointer-events: none;
+            color: gray;
+            text-decoration: none;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header>
+        <h1>СЕРВИС РАССЫЛОК</h1>
+    </header>
+    <nav>
+        <ul>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'mailings:client_list' %}">Клиенты</a></li>
+                <li><a href="{% url 'mailings:message_list' %}">Сообщения</a></li>
+                <li><a href="{% url 'mailings:mailing_list' %}">Рассылки</a></li>
+                <li><a href="{% url 'mailings:mailing_attempt_list' %}">Попытки рассылки</a></li>
+                <li><a href="{% url 'article_list' %}">Блог</a></li>
+            {% else %}
+                <li><a href="#" class="inactive-link">Клиенты</a></li>
+                <li><a href="#" class="inactive-link">Сообщения</a></li>
+                <li><a href="#" class="inactive-link">Рассылки</a></li>
+                <li><a href="#" class="inactive-link">Попытки рассылки</a></li>
+                <li><a href="{% url 'article_list' %}">Блог</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    <main>
+        {% block content %}
+        <p>Это ваша главная страница. Здесь вы можете добавить нужную информацию и ссылки на другие страницы вашего сайта.</p>
+
+        <h2>Рекомендуемые статьи</h2>
+        {% if random_articles %}
+            <ul>
+                {% for article in random_articles %}
+                    <li>
+                        <h3>{{ article.title }}</h3>
+                        <p>{{ article.content|truncatewords:20 }}</p>
+                        <p><small>Опубликовано: {{ article.pub_date }}</small></p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Статей нет.</p>
+        {% endif %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Ваша компания</p>
+    </footer>
+    <script src="{% static 'admin/js/script.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}Редактировать рассылку{% else %}Создать рассылку{% endif %}
+{% endblock %}
+
+{% block content %}
+<h1>{% if form.instance.pk %}Редактировать рассылку{% else %}Создать рассылку{% endif %}</h1>
+
+<div class="settings">
+    <h2>Настройки рассылки</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">{% if form.instance.pk %}Обновить{% else %}Создать{% endif %}</button>
+    </form>
+</div>
+
+<!-- Секция с рассылками -->
+<div class="mailings">
+
+    <ul>
+        {% for mailing in mailings %}
+            <li>{{ mailing.title }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
